@@ -38,7 +38,7 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
       end
     else
       respond_to do |format|
-        puts resource
+        puts resource.to_yaml
         format.html {
           clean_up_passwords(resource)
           render :new
