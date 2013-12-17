@@ -38,13 +38,12 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
       end
     else
       respond_to do |format|
-        puts resource.to_yaml
         format.html {
           clean_up_passwords(resource)
           render :new
         }
         format.js {
-          render :json => {:success => false}.to_json
+          render :json => {:success => false, :message => resource.errors.full_messages.first}.to_json
         }
       end
     end
