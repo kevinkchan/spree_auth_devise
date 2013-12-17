@@ -33,7 +33,7 @@ class Spree::UserSessionsController < Devise::SessionsController
           render :new
         }
         format.js {
-          render :json => {:success => false}.to_json
+          render :json => {:success => false, :message => t('devise.failure.invalid')}.to_json
         }
       end
     end
