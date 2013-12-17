@@ -24,14 +24,29 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
   def create
     @user = build_resource(params[:spree_user])
     if resource.save
-      set_flash_message(:notice, :signed_up)
       sign_in(:spree_user, @user)
       session[:spree_user_signup] = true
       associate_user
-      sign_in_and_redirect(:spree_user, @user)
+      respond_to do |format|
+        format.html {
+          set_flash_message(:notice, :signed_up)
+          sign_in_and_redirect(:spree_user, @user)
+        }
+        format.js {
+          render :json => {:success => true}.to_json
+        }
+      end
     else
-      clean_up_passwords(resource)
-      render :new
+      respond_to do |format|
+        puts resource
+        format.html {
+          clean_up_passwords(resource)
+          render :new
+        }
+        format.js {
+          render :json => {:success => false}.to_json
+        }
+      end
     end
   end
 
