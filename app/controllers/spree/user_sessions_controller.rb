@@ -23,7 +23,7 @@ class Spree::UserSessionsController < Devise::SessionsController
         }
         format.js {
           user = spree_current_user
-          render :json => {:success => 'true', :ship_address => user.ship_address, :bill_address => user.bill_address}.to_json
+          render :json => {:success => true, :ship_address => user.ship_address, :bill_address => user.bill_address}.to_json
         }
       end
     else
@@ -33,7 +33,7 @@ class Spree::UserSessionsController < Devise::SessionsController
           render :new
         }
         format.js {
-          render :json => {:success => 'false'}.to_json
+          render :json => {:success => false}.to_json
         }
       end
     end
